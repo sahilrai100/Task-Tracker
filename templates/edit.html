@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Edit Task</h3>
+<form method="post">
+  <div class="mb-3"><label>Title</label><input name="title" class="form-control" value="{{ task.title }}" required></div>
+  <div class="mb-3"><label>Description</label><textarea name="description" class="form-control">{{ task.description }}</textarea></div>
+  <div class="mb-3">
+    <label>Priority</label>
+    <select name="priority" class="form-select">
+      {% for p in ['Low','Medium','High'] %}
+        <option {{ 'selected' if task.priority==p else '' }}>{{ p }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="mb-3"><label>Due Date</label><input type="date" name="due_date" value="{{ task.due_date }}" class="form-control"></div>
+  <div class="mb-3">
+    <label>Status</label>
+    <select name="status" class="form-select">
+      {% for s in ['Pending','In Progress','Completed'] %}
+        <option {{ 'selected' if task.status==s else '' }}>{{ s }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <button class="btn btn-success">Update</button>
+</form>
+{% endblock %}
