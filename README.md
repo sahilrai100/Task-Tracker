@@ -44,6 +44,9 @@ pip install flask flask_sqlalchemy
 3. Run the app
 
 ```powershell
+
+python app.py
+
 python -m task_tracker.app
 ```
 
