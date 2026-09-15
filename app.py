@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import case
 from datetime import datetime, timedelta
 import os
 
@@ -58,7 +59,10 @@ def index():
         query = query.filter_by(status=filter_status)
 
     if sort_by == 'priority':
-        query = query.order_by(Task.priority.desc())
+        priority_rank = case(
+            {'High': 3, 'Medium': 2, 'Low': 1}, value=Task.priority, else_=0
+        )
+        query = query.order_by(priority_rank.desc())
     elif sort_by == 'title':
         query = query.order_by(Task.title)
     else:
