@@ -4,6 +4,8 @@ from sqlalchemy import case
 from datetime import datetime, timedelta
 import os
 
+from validation import validate_task_data
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'dev'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tasks.db'
@@ -75,6 +77,10 @@ def index():
 @app.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
+        errors = validate_task_data(request.form)
+        if errors:
+            return render_template('create.html', errors=errors, form=request.form)
+
         title = request.form['title']
         desc = request.form['description']
         priority = request.form['priority']
