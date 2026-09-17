@@ -99,6 +99,10 @@ def create():
 def edit(id):
     task = Task.query.get_or_404(id)
     if request.method == 'POST':
+        errors = validate_task_data(request.form)
+        if errors:
+            return render_template('edit.html', task=task, errors=errors, form=request.form)
+
         task.title = request.form['title']
         task.description = request.form['description']
         task.priority = request.form['priority']
