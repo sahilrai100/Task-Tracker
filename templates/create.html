@@ -1,20 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
 <h3>Create Task</h3>
+{% if errors %}
+  <div class="alert alert-danger">
+    <ul class="mb-0">
+      {% for error in errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
 <form method="post">
-  <div class="mb-3"><label>Title</label><input name="title" class="form-control" required></div>
-  <div class="mb-3"><label>Description</label><textarea name="description" class="form-control"></textarea></div>
+  <div class="mb-3"><label>Title</label><input name="title" class="form-control" value="{{ form.title if form else '' }}" required></div>
+  <div class="mb-3"><label>Description</label><textarea name="description" class="form-control">{{ form.description if form else '' }}</textarea></div>
   <div class="mb-3">
     <label>Priority</label>
     <select name="priority" class="form-select">
-      <option>Low</option><option>Medium</option><option>High</option>
+      {% for p in ['Low','Medium','High'] %}
+        <option {{ 'selected' if form and form.priority==p else '' }}>{{ p }}</option>
+      {% endfor %}
     </select>
   </div>
-  <div class="mb-3"><label>Due Date</label><input type="date" name="due_date" class="form-control"></div>
+  <div class="mb-3"><label>Due Date</label><input type="date" name="due_date" value="{{ form.due_date if form else '' }}" class="form-control"></div>
   <div class="mb-3">
     <label>Status</label>
     <select name="status" class="form-select">
-      <option>Pending</option><option>In Progress</option><option>Completed</option>
+      {% for s in ['Pending','In Progress','Completed'] %}
+        <option {{ 'selected' if form and form.status==s else '' }}>{{ s }}</option>
+      {% endfor %}
     </select>
   </div>
   <button class="btn btn-primary">Save</button>

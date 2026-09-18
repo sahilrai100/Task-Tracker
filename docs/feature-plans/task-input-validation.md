@@ -34,7 +34,7 @@ users fix their input instead of getting a confusing blank/broken row.
 - [x] 1. Add `validation.py` with `validate_task_data()` plus unit tests in `tests/test_validation.py` (stdlib `unittest`, no new dependency). (done 2026-09-15)
 - [x] 2. Wire validation into the `/create` route: reject invalid submissions, re-render `create.html` with errors and the submitted values. (done 2026-09-16)
 - [x] 3. Wire validation into the `/edit/<id>` route the same way, re-rendering `edit.html` on error. (done 2026-09-17)
-- [ ] 4. Update `create.html` and `edit.html` to display the error list and preserve submitted values on a failed submission.
+- [x] 4. Update `create.html` and `edit.html` to display the error list and preserve submitted values on a failed submission. (done 2026-09-18)
 - [ ] 5. Update the README: remove "Validation is melty" from Known issues and add a short Validation section describing the rules.
 
 ## Notes

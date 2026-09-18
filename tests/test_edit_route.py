@@ -27,7 +27,7 @@ class EditRouteValidationTests(unittest.TestCase):
     def test_invalid_submission_is_rejected_without_saving(self):
         response = self.client.post(f'/edit/{self.task_id}', data={
             'title': '',
-            'description': 'desc',
+            'description': 'kept description',
             'priority': 'Urgent',
             'due_date': 'not-a-date',
             'status': 'Done',
@@ -37,6 +37,11 @@ class EditRouteValidationTests(unittest.TestCase):
         with app.app_context():
             task = db.session.get(Task, self.task_id)
             self.assertEqual(task.title, 'Original title')
+
+        body = response.get_data(as_text=True)
+        self.assertIn('Title is required.', body)
+        self.assertIn('Status must be Pending, In Progress, or Completed.', body)
+        self.assertIn('kept description', body)
 
     def test_valid_submission_still_updates_the_task(self):
         response = self.client.post(f'/edit/{self.task_id}', data={
